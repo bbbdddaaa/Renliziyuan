@@ -12,12 +12,12 @@ function IsCheckTimeOut() {
 }
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
-  timeout: 5000
+  timeout: 50000
 })
 // 添加请求头
 service.interceptors.request.use(config => {
   if (store.getters.token) {
-    console.log(IsCheckTimeOut())
+    // console.log(IsCheckTimeOut())
     if (IsCheckTimeOut()) {
       store.dispatch('user/logout')
       router.push('/login')
@@ -25,7 +25,7 @@ service.interceptors.request.use(config => {
     }
     config.headers.Authorization = `Bearer ${store.getters.token}`
   }
-  console.log(config)
+  // console.log(config)
   return config
 }, error => {
   return Promise.reject(error)
