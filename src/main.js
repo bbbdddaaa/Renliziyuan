@@ -16,6 +16,8 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 import * as directives from '@/directives'
+import component from '@/components/index1'
+Vue.use(component)
 console.log(directives)
 console.log(Object.keys(directives))
 Object.keys(directives).forEach(ele => {
