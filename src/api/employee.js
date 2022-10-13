@@ -47,3 +47,30 @@ export function importEmployee(data) {
     data
   })
 }
+
+export function saveEmployessInfo(data) {
+  return request({
+    url: `/employees/${data.userId}/personalInfo`,
+    method: 'PUT',
+    data
+  })
+}
+
+/**
+ * 获取岗位信息
+ * @param {*} id
+ * @returns promise
+ */
+export function getEmployeesJobInfo(id) {
+  return request({
+    url: `/employees/${id}/jobs`
+  })
+}
+
+export function saveEmployessJobInfo(data) {
+  return request({
+    url: `/employees/${data.userId}/jobs`,
+    method: 'PUT',
+    data
+  })
+}

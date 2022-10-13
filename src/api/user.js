@@ -12,3 +12,21 @@ export const getUserDetailById = (id) => request({
   method: 'GET'
 })
 
+export const saveUserDetailById = (data) => {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'PUT',
+    data
+  })
+}
+
+export const getEmployeesInfo = (id) => {
+  return request({
+    url: `/employees/${id}/personalInfo`,
+    method: 'GET'
+  })
+}
+
+export function logout() {
+
+}

@@ -8,7 +8,7 @@ export default {
     {
       path: '',
       component: () => import('@/views/setting'),
-      meta: { title: 'social', icon: 'table' }
+      meta: { title: '社保', icon: 'table' }
     }
   ]
 }
