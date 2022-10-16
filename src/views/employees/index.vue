@@ -23,6 +23,11 @@
         <el-card>
           <el-table v-loading="loading" border :data="list">
             <el-table-column label="序号" sortable="" width="80" type="index" />
+            <el-table-column label="头像" prop="staffPhoto">
+              <template slot-scope="{row}">
+                <img style="width:100%" :src="row.staffPhoto" alt="" @click="genQrCode(row.staffPhoto)">
+              </template>
+            </el-table-column>
             <el-table-column label="姓名" prop="username" />
             <el-table-column label="工号" prop="workNumber" />
             <el-table-column label="聘用形式" prop="formOfEmployment" :formatter="formatterFn" />
@@ -65,6 +70,18 @@
       </div>
     </template>
     <addEmployee :dialog-visible.sync="dialogVisible" />
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible1"
+      width="80%"
+      :before-close="handleClose"
+    >
+      <canvas ref="canvas" />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible1 = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -72,6 +89,7 @@
 import addEmployee from './component/add-employee.vue'
 import EnuHireType from '@/api/constant/employees'
 import { getEmployeeList, delEmployee } from '@/api/employee'
+import QRCode from 'qrcode'
 export default {
   components: {
     addEmployee
@@ -86,7 +104,8 @@ export default {
       total: 0,
       loading: false,
       hireType: EnuHireType.hireType,
-      dialogVisible: false
+      dialogVisible: false,
+      dialogVisible1: false
     }
   },
   created() {
@@ -164,6 +183,24 @@ export default {
     },
     goDetail(row) {
       this.$router.push('/employees/detail/' + row.id)
+    },
+    genQrCode(staffPhoto) {
+      // vue: 数据驱动/组件系统
+      // 数据驱动： 数据变化=>视图变化
+      // 数据变化同步 => vue背后 将视图更新（异步）
+      // 为什么？如果同步 数据变了 视图立即变 太消耗性能
+      // 等所有的数据变化了
+      if (!staffPhoto) return this.$message.error('没有头像')
+      this.dialogVisible1 = true
+      this.$nextTick(() => {
+        QRCode.toCanvas(this.$refs.canvas, staffPhoto, function(error) {
+          if (error) console.error(error)
+          console.log('success!')
+        })
+      })
+    },
+    handleClose() {
+      this.dialogVisible1 = false
     }
   }
 }

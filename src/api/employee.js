@@ -67,6 +67,13 @@ export function getEmployeesJobInfo(id) {
   })
 }
 
+export const getEmployeesInfo = (id) => {
+  return request({
+    url: `/employees/${id}/personalInfo`,
+    method: 'GET'
+  })
+}
+
 export function saveEmployessJobInfo(data) {
   return request({
     url: `/employees/${data.userId}/jobs`,

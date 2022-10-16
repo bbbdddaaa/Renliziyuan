@@ -1,5 +1,6 @@
 <template>
   <div class="job-info">
+    <i style="width:100%;text-align:right" class="el-icon-printer" @click="$router.push('/employees/print/'+ userId)" />
     <!-- 基础信息 -->
     <el-form label-width="220px">
       <div class="block">
